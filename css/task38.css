@@ -1,0 +1,16 @@
+table{
+    border-left:1px solid #cfcfcf ;
+    border-top:1px solid #cfcfcf ;
+}
+.first{
+    color:#ffffff;
+    background-color: #333333;
+}
+td{
+    text-align: center;
+    border-right:1px solid #cfcfcf ;
+    border-bottom:1px solid #cfcfcf ;
+    width:150px;
+    font-family: "Microsoft YaHei";
+    font-size: 20px;
+}

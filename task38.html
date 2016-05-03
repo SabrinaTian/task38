@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>表格排序</title>
+    <link rel="stylesheet" type="text/css" href="css/task38.css">
+</head>
+<body>
+    <table>
+        <thead>
+            <tr class="first">
+                <td>姓名</td>
+                <td>语文
+                    <div style="float:right"><img src="image/top.png" class="top"><img src="image/down.png" class="down"></div>
+                </td>
+                <td>数学
+                    <div style="float:right"><img src="image/top.png" class="top"><img src="image/down.png" class="down"></div>
+                </td>
+                <td>英语
+                    <div style="float:right"><img src="image/top.png" class="top"><img src="image/down.png" class="down"></div>
+                </td>
+                <td>总分
+                    <div style="float:right"><img src="image/top.png" class="top"><img src="image/down.png" class="down"></div>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>小明</td>
+                <td>80</td>
+                <td>90</td>
+                <td>70</td>
+                <td>240</td>
+            </tr>
+            <tr>
+                <td>小红</td>
+                <td>90</td>
+                <td>60</td>
+                <td>90</td>
+                <td>240</td>
+            </tr>
+            <tr>
+                <td>小亮</td>
+                <td>60</td>
+                <td>100</td>
+                <td>70</td>
+                <td>230</td>
+            </tr>
+        </tbody>
+    </table>
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script>
+    //获取表格列的值
+    $(function(){
+        //存入点击列的每一个TD的内容；
+        var aTdCont = [];
+        //点击列的索引值
+        var thi = 0;
+
+        //重新对TR进行排序
+        var setTrIndex = function(tdIndex){
+            for(var i=0;i<aTdCont.length;i++){
+                var trCont = aTdCont[i];
+                $("tbody tr").each(function() {
+                    var thisText = $(this).children("td:eq("+tdIndex+")").text();
+                    if(thisText == trCont){
+                        $("tbody").append($(this));
+                    }
+                });
+            }
+        }
+        //比较函数的参数函数
+        var compare_down = function(a,b){
+            return a-b;
+        }
+
+        var compare_up = function(a,b){
+            return b-a;
+        }
+
+        //比较函数
+        var fSort = function(compare){
+            aTdCont.sort(compare);
+        }
+        //取出TD的值，并存入数组,取出前二个TD值；
+        var fSetTdCont = function(thIndex){
+            $("tbody tr").each(function() {
+                var tdCont = $(this).children("td:eq("+thIndex+")").text();
+                aTdCont.push(tdCont);
+            });
+        }
+        //点击时需要执行的函数
+        var clickFun = function(thindex){
+            aTdCont = [];
+            //获取点击当前列的索引值
+            var nThCount = thindex;
+            //调用sortTh函数 取出要比较的数据
+            fSetTdCont(nThCount);
+        }
+        //点击事件绑定函数
+        $(".top").click(function(){
+            clickFun(thi);
+            //调用比较函数 升序
+            fSort(compare_down);
+            //重新排序行
+            setTrIndex(thi);
+        });
+        $(".down").click(function(){
+            thi= $(this).index();
+            clickFun(thi);
+            //调用比较函数,降序
+            fSort(compare_up);
+            //重新排序行
+            setTrIndex(thi);
+        });
+    });
+</script>
+</body>
+</html>
